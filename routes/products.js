@@ -2,27 +2,48 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../server/db_connect');
 const bodyParser = require('body-parser');
+const Product = require('../models/Product')
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
+  // Get
 router.route("/")
-    .get( async (req, res) => {
-        const q_res = await pool.query('Select * from products');
-        res.json(q_res.rows) })
+    .get((req, res) => Product.findAll()
+        .then(prods => res.send(prods))
+        .catch(err => console.log(err)));
 
-    .post( async (req, res) => {
-        const q_res = await pool.query(`insert into products (name, color) values ('${req.body.name}', '${req.body.color}')`);
-        res.json(q_res.rows) });
+  // Post
+router.route("/")
+    .post((req, res) => {
+    let {name, color} = req.body
 
+    Product.create({
+        name, color})
+        .then(prod => res.redirect('/'))
+        .catch(err => console.log(err))
+});
+
+  // Put
 router.route("/:id")
-    .put( async (req, res) => {
-        const q_res = await pool.query(`update products set name='${req.body.name}', color='${req.body.color}' where id=${req.params.id}`);
-        res.json(q_res.rows) })
+    .put((req, res) => {
+        let {name, color} = req.body
+        
+    Product.update(
+        {name, color}, 
+        {where: {id: req.params.id}} )
+        .then(prod => res.redirect('/'))
+        .catch(err => console.log(err))
+});
 
-    .delete( async (req, res) => {
-        const q_res = await pool.query(`delete from products where id=${req.params.id}`);
-        res.json(q_res.rows) });
+ // Delete
+router.route("/:id")
+    .delete((req, res) => {
+        Product.destroy(
+            {where: {id: req.params.id}})
+            .then(prod => res.redirect('/'))
+            .catch(err => console.log(err))
+});
 
 
 module.exports = router;
