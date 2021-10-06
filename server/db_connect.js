@@ -1,14 +1,11 @@
 const Sequelize = require('sequelize');
-const dotenv = require('dotenv');
-const {Pool} = require("pg");
 
+require('dotenv').config();
 
-dotenv.config();
-
-const pool = new Sequelize('postgres', 'postgres', 'password', {
+const pool = new Sequelize('postgres', process.env.DB_USER, process.env.DB_PASSWORD, {
   host: 'localhost',
   dialect: 'postgres',
-  operatorsAliases: false,
+  operatorsAliases: 0,
 
   pool: {
     max: 5,
