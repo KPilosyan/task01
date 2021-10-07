@@ -21,14 +21,15 @@ class UserController {
             const {email, password} = req.body;
 
             const userData = await userService.login(email, password);
-            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 *1000});  //cookie not working for now, idk why yet
-
-            return res.json(userData)
+            // res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 *1000});  //cookie not working for now, idk why yet
+            
+            return res.json(userData.accessToken)
 
         } catch (err) {
             console.log(err)
         }
         next()
+
     }
 
     async logout(req, res, next) {

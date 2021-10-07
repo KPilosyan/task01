@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
+const auth = require('../middlewares/auth_middle')
+
 const productController = require('../controllers/product_controller')
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get("/", productController.getProducts)
+router.get("/", auth(), productController.getProducts)
 router.get("/:id", productController.getSpecificProduct)
 router.post("/", productController.postProduct)
 router.put("/:id", productController.putProduct)
