@@ -19,7 +19,9 @@ class ProductController {
             return res.json(product)
 
         } catch (err) {
-            console.log(err)
+            // console.log(err)
+            res.json(err.message)
+            throw err
         }
         next()
     }

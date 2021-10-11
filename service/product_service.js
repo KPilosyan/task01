@@ -16,11 +16,13 @@ class ProductService {
             const product = await productModel.findOne({where: {id: req.params.id}})
             return product;
         } catch (err) {
-            console.log(err)
+           console.log(err)
+           throw err
+
         }
     }
 
-    async postProduct(req) {
+    async postProduct(name, color) {
         try{
             let {name, color} = req.body
 
