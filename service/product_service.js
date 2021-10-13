@@ -11,9 +11,9 @@ class ProductService {
         }
     }
 
-    async getSpecificProduct(req) {
+    async getSpecificProduct(id) {
         try{
-            const product = await productModel.findOne({where: {id: req.params.id}})
+            const product = await productModel.findOne({where: {id: id}})
             return product;
         } catch (err) {
            console.log(err)
@@ -24,8 +24,6 @@ class ProductService {
 
     async postProduct(name, color) {
         try{
-            let {name, color} = req.body
-
             const postedProduct = await productModel.create({name, color})
             return postedProduct;
 
@@ -34,13 +32,12 @@ class ProductService {
         }
     }
 
-    async putProduct(req) {
+    async putProduct(id, name, color) {
         try{
-            let {name, color} = req.body 
         
             const putProducts = await productModel.update(
             {name, color}, 
-            {where: {id: req.params.id}} )
+            {where: {id: id}} )
 
             return putProducts
 
@@ -49,9 +46,9 @@ class ProductService {
         }
     }
 
-    async deleteProduct(req) {
+    async deleteProduct(id) {
         try{
-            const deletedProducts = await productModel.destroy( {where: {id: req.params.id}})
+            const deletedProducts = await productModel.destroy( {where: {id: id}})
             return deletedProducts;
 
         } catch (err) {

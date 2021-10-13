@@ -15,7 +15,7 @@ class ProductController {
 
     async getSpecificProduct(req, res, next) {
         try {
-            const product = await productService.getSpecificProduct(req)
+            const product = await productService.getSpecificProduct(req.params.id)
             return res.json(product)
 
         } catch (err) {
@@ -28,7 +28,7 @@ class ProductController {
 
     async postProduct(req, res, next) {
         try {
-            const postedProduct = await productService.postProduct(req)
+            const postedProduct = await productService.postProduct(req.name, req.color)
             return res.json(postedProduct)
 
         } catch (err) {
@@ -39,7 +39,7 @@ class ProductController {
 
     async putProduct(req, res, next) {
         try {
-            const putProduct = await productService.putProduct(req)
+            const putProduct = await productService.putProduct(req.params.id, req.name, req.color)
             return res.json(putProduct)
 
         } catch (err) {
@@ -50,7 +50,7 @@ class ProductController {
 
     async deleteProduct(req, res, next) {
         try {
-            const deletedProduct = await productService.deleteProduct(req)
+            const deletedProduct = await productService.deleteProduct(req.params.id)
             return res.json(deletedProduct)
 
         } catch (err) {
