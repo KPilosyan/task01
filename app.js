@@ -3,7 +3,7 @@ const app = express();
 const productRouter = require("./routes/product_routes")
 const userRouter = require("./routes/user_routes")
 
-const errorHandler = require('./errorHandler/error_handler')
+const errorHandler = require('./errors/handler')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

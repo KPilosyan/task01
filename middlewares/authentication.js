@@ -1,4 +1,7 @@
 const jwt = require("jsonwebtoken");
+const BadRequestError = require('../errors/internal')
+const tokenModel = require("../models/token_model")
+
 
 module.exports = () => {
     return (req, res, next) => {
@@ -6,7 +9,8 @@ module.exports = () => {
         // Find JWT in Headers
         const token = req.headers["authorization"]
         if (!token) {
-            return res.status(401).send("No access token provided")
+            const badReqErrObj = new BadRequestError("No access token provided")
+            return next(badReqErrObj)
         }
         else{
             // JWT Validation 
@@ -14,7 +18,8 @@ module.exports = () => {
             const tokenBody = token.slice(7)  //Takes out 'Bearer' part 
             jwt.verify(tokenBody, process.env.JWT_ACCESS_SECRET, (err, decoded) => {
                 if (err) {
-                    return res.status(401).send(err.message)
+                    const badReqErrObj = new BadRequestError(err)
+                    return next(badReqErrObj)
                 }
             })
             next()

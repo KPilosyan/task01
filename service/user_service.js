@@ -1,27 +1,33 @@
 const userModel = require('../models/user_model')
 const bcrypt = require('bcrypt')
 const tokenService = require('./token_service') 
+const BadReqError = require('../errors/bad_request')
+const NotFoundError = require('../errors/not_found')
+
 
 class UserService {
-    async registration (email, password) {
+    async registration (email, password, next) {
         const candidate = await userModel.findOne({where: {email: email}})
         if (candidate) {
-            throw new Error('User with this email already exists')
+            const badReqErrObj = new BadReqError('User Already Exists')
+            return next(badReqErrObj)
         } 
         const user = await userModel.create({email, password})
 
         return {id: user.id, email: user.email}
     }
 
-    async login (email, password) {
+    async login (email, password, next) {
         const user = await userModel.findOne({where: {email: email}})
         if (!user) {
-            throw new Error("This email is not registered")
+            const notFoundErrObj = new NotFoundError('This email is not registered')
+            return next(notFoundErrObj)
         } 
 
         const isPasswordEqual = await bcrypt.compare(password, user.password);
         if (!isPasswordEqual) {
-            throw new Error ('Wrong Password')
+            const badReqErrObj = new BadReqError('Wrong Password')
+            return next(badReqErrObj)
         }
                
         // Tokens

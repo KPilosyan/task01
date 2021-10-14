@@ -1,4 +1,6 @@
 const productModel = require("../models/product_model")
+const BadRequestError = require('../errors/bad_request')
+const InternalError = require('../errors/internal')
 
 class ProductService {
     
@@ -7,18 +9,22 @@ class ProductService {
             const products = await productModel.findAll()
             return products;
         } catch (err) {
-            console.log(err)
+            const internalErrObj = new InternalError('Internal Sever Error Occured')
+            return next(internalErrObj)
         }
     }
 
-    async getSpecificProduct(id) {
+    async getSpecificProduct(id, next) {
         try{
             const product = await productModel.findOne({where: {id: id}})
+            if (product === null) {
+                const badReqErrObj = new BadRequestError('Bad Request: Maybe there is no such product')
+                return next(badReqErrObj) 
+            }
             return product;
         } catch (err) {
-           console.log(err)
-           throw err
-
+            const internalErrObj = new InternalError('Internal Sever Error Occured')
+            return next(internalErrObj) 
         }
     }
 
@@ -28,7 +34,8 @@ class ProductService {
             return postedProduct;
 
         } catch (err) {
-            console.log(err)
+            const internalErrObj = new InternalError("Internal Sever Error: Unable to create product")
+            return next(internalErrObj)
         }
     }
 
@@ -42,7 +49,8 @@ class ProductService {
             return putProducts
 
         } catch (err) {
-            console.log(err)
+            const internalErrObj = new InternalError("Internal Sever Error: Unable to update product")
+            return next(internalErrObj)
         }
     }
 
@@ -52,7 +60,8 @@ class ProductService {
             return deletedProducts;
 
         } catch (err) {
-            console.log(err)
+            const internalErrObj = new InternalError("Internal Sever Error: Unable to delete product")
+            return next(internalErrObj)
         }
     }
 }

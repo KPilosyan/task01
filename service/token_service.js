@@ -16,9 +16,8 @@ class TokenService {
             console.log("Token ID Exists")
             return tokenData.save();
         }
-        console.log("No such Token")
-        const token = await tokenModel.create({id: id, refreshToken})
-        console.log(token)
+        // Create new token, because no token was found
+        const token = await tokenModel.create({id: id, accessToken})
         return token;
     }
 }
