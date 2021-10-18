@@ -3,7 +3,7 @@ const db = require('../dataBase/dbConnect')
 const bcrypt = require('bcrypt')
 
 
-const user_model = db.define('users', {
+const userModel = db.define('users', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -30,4 +30,4 @@ const user_model = db.define('users', {
 
 });
 
-module.exports = user_model;
+module.exports = userModel;

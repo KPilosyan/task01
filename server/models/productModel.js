@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../dataBase/dbConnect')
 
-const product_model = db.define('products', {
+const productModel = db.define('products', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -20,4 +20,4 @@ const product_model = db.define('products', {
 
 });
 
-module.exports = product_model;
+module.exports = productModel;

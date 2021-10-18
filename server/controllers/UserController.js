@@ -1,6 +1,5 @@
-const userService = require('../service/userService')
-const NotFound = require('../errors/NotFound');
-const BadRequest = require('../errors/BadRequest');
+const userService = require('../service/UserService')
+
 
 class UserController {
     
@@ -12,8 +11,7 @@ class UserController {
             return res.json({'Registration Successful': userData})
 
         } catch (err) {
-            const BadRequestErrorObject = new BadRequest("Please Provide Valid Parameters")
-            return next(BadRequestErrorObject)
+            return next(err)
 
         }
     }
@@ -27,8 +25,7 @@ class UserController {
             return res.json(userData.accessToken)
 
         } catch (err) {
-            const NotFoundErrorObject = new NotFound("User Not Found")
-            return next(NotFoundErrorObject)
+            return next(err)
         }
     }
 }
