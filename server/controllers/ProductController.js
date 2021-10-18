@@ -1,4 +1,4 @@
-const productService = require('../service/productService')
+const ProductService = require('../service/ProductService')
 
 const InternalError = require('../errors/Internal')
 
@@ -7,7 +7,7 @@ class ProductController {
     
     async getProducts(req, res, next) {
         try {
-            const products = await productService.getProducts()
+            const products = await ProductService.getProducts()
             return res.json(products)
 
         } catch (err) {
@@ -17,7 +17,7 @@ class ProductController {
 
     async getSpecificProduct(req, res, next) {
         try {
-            const product = await productService.getSpecificProduct(req.params.id)
+            const product = await ProductService.getSpecificProduct(req.params.id)
             return res.json(product)
 
         } catch (err) {
@@ -27,7 +27,7 @@ class ProductController {
 
     async postProduct(req, res, next) {
         try {
-            const postedProduct = await productService.postProduct(req.name, req.color)
+            const postedProduct = await ProductService.postProduct(req.name, req.color)
             return res.json(postedProduct)
 
         } catch (err) {
@@ -38,7 +38,7 @@ class ProductController {
 
     async putProduct(req, res, next) {
         try {
-            const putProduct = await productService.putProduct(req.params.id, req.name, req.color)
+            const putProduct = await ProductService.putProduct(req.params.id, req.name, req.color)
             return res.json(putProduct)
 
         } catch (err) {
@@ -49,7 +49,7 @@ class ProductController {
 
     async deleteProduct(req, res, next) {
         try {
-            const deletedProduct = await productService.deleteProduct(req.params.id)
+            const deletedProduct = await ProductService.deleteProduct(req.params.id)
             return res.json(deletedProduct)
 
         } catch (err) {
