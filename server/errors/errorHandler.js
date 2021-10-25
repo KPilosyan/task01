@@ -2,12 +2,11 @@ const GeneralError = require('./GeneralError');
 
 const errorHandler = (err, req, res, next) => {
   if (!err) {
-    console.log("error chkar")
     return next();
   }
 
   let errObject = {
-    name: 'Error',    //ErrorCodes.E_UNKNOWN,
+    name: 'Error', // ErrorCodes.E_UNKNOWN,
     status: 400,
     message: err.message,
   };

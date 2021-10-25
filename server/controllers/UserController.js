@@ -1,33 +1,28 @@
-const userService = require('../service/UserService')
-
+const userService = require('../service/UserService');
 
 class UserController {
-    
-    async registration(req, res, next) {
-        try {
-            const {email, password} = req.body;
-            
-            const userData = await userService.registration(email, password)
-            return res.json({'Registration Successful': userData})
+  async registration(req, res, next) {
+    try {
+      const { email, password } = req.body;
 
-        } catch (err) {
-            return next(err)
-
-        }
+      const userData = await userService.registration(email, password);
+      return res.json({ 'Registration Successful': userData });
+    } catch (err) {
+      return next(err);
     }
+  }
 
-    async login(req, res, next) { 
-        try {
-            const {email, password} = req.body;
+  async login(req, res, next) {
+    try {
+      const { email, password } = req.body;
 
-            const userData = await userService.login(email, password);
-            
-            return res.json(userData.accessToken)
+      const userData = await userService.login(email, password);
 
-        } catch (err) {
-            return next(err)
-        }
+      return res.json(userData.accessToken);
+    } catch (err) {
+      return next(err);
     }
+  }
 }
 
-module.exports = new UserController();   
+module.exports = new UserController();
