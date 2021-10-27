@@ -1,8 +1,22 @@
 import { useMemo, useEffect, useState } from 'react';
 import { useTable } from 'react-table';
 import axios from 'axios';
-import { COLUMNS } from './columns';
 import './table.css';
+
+const COLUMNS = [
+  {
+    Header: 'id',
+    accessor: 'id',
+  },
+  {
+    Header: 'name',
+    accessor: 'name',
+  },
+  {
+    Header: 'color',
+    accessor: 'color',
+  },
+];
 
 const BasicTable = () => {
   const [products, setProducts] = useState([]);
