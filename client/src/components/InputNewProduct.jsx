@@ -1,27 +1,28 @@
-import { useState } from 'react';
-import '../App'
+import React from "react";
 
+export const InputNewProduct = ({ addProduct, postProduct }) => {
+    const [product, setProduct] = React.useState("");
 
-const InputNewProduct = (props) => {
-    const [productValue, setProductValue] = useState('');
-    const onSubmit = props.onSubmit;
+    const updateProduct = (event) => {
+        setProduct(event.target.value);
+    };
 
-    const newProduct = (event) => {
-        setProductValue(event.target.value);
-    }
+    const onAddProductClick = () => {
+        addProduct(product);
+        postProduct(product);
+        setProduct("");
+    };
 
     return (
-        <>
+        <div>
             <input
+                onChange={updateProduct}
+                value={product}
                 type="text"
-                value={productValue}
-                onChange={newProduct}
                 name="product"
                 placeholder="Product"
             />
-            <input type="submit" value="Submit" onClick={() => onSubmit(productValue)} />
-        </>
-    )
-}
-
-export default InputNewProduct;
+            <button onClick={onAddProductClick}>Add Product</button>
+        </div>
+    );
+};

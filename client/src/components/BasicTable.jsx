@@ -44,8 +44,28 @@ const BasicTable = (props) => {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = tableInstance;
 
+  console.log(products)
 
   return (
+
+    // <table>
+    //   <tr>
+    //     <th>Company</th>
+    //     <th>Contact</th>
+    //     <th>Country</th>
+    //   </tr>
+    //   <tr>
+    //     <td>Alfreds Futterkiste</td>
+    //     <td>Maria Anders</td>
+    //     <td>Germany</td>
+    //   </tr>
+    //   <tr>
+    //     <td>Centro comercial Moctezuma</td>
+    //     <td>Francisco Chang</td>
+    //     <td>Mexico</td>
+    //   </tr>
+    // </table>
+
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
@@ -75,7 +95,8 @@ const BasicTable = (props) => {
         })}
       </tbody>
     </table>
-  );
+
+  )
 };
 
 export default BasicTable;

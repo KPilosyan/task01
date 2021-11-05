@@ -1,34 +1,42 @@
 import React from 'react';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import InputNewProduct from './components/InputNewProduct';
+import { InputNewProduct } from './components/InputNewProduct';
 import BasicTable from "./components/BasicTable";
+import { useSelector, useDispatch } from "react-redux";
+import { addProductAction, getProductsAction } from "./actions";
+import { postProduct } from './components/postProduct'
 
 
 function App() {
-  const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    axios.get('http://localhost:5000/products').then((res) => {
-      setProducts(res.data);
-    });
-  }, []);
+  const products = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+  console.log(products)
 
-  const onSubmit = (productValue) => {
-    axios.post("http://localhost:5000/products", { productValue }).then((res) => {
-      axios.get('http://localhost:5000/products').then((res) => {
-        setProducts(res.data);
-      });
-    })
-  }
+  dispatch(getProductsAction())
+
+  const onAddProduct = (product) => {
+    dispatch(addProductAction(product));
+  };
+
 
   return (
-    <div className="products">
+    <>
 
       <BasicTable products={products} />
-      <InputNewProduct onSubmit={onSubmit} />
+      <InputNewProduct addProduct={onAddProduct} />
 
-    </div>
+      <hr />
+      <ul>
+        {
+          products.map((product) => {
+            return <li key={product}>{product}</li>;
+          })
+        }
+      </ul>
+      <hr />
+      <button onClick={postProduct}>Post</button>
+
+    </>
   );
 }
 
