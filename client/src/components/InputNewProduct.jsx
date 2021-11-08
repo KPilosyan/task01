@@ -1,17 +1,19 @@
 import React from "react";
+import { saveNewProduct } from "../redux/axiosProducts";
+import { useDispatch } from "react-redux";
 
-export const InputNewProduct = ({ addProduct, postProduct }) => {
+
+export const InputNewProduct = () => {
     const [product, setProduct] = React.useState("");
+    const dispatch = useDispatch();
 
     const updateProduct = (event) => {
         setProduct(event.target.value);
     };
 
-    const onAddProductClick = () => {
-        addProduct(product);
-        postProduct(product);
-        setProduct("");
-    };
+    const handleSaveNewProduct = () => {
+        dispatch(saveNewProduct(product))
+    }
 
     return (
         <div>
@@ -22,7 +24,7 @@ export const InputNewProduct = ({ addProduct, postProduct }) => {
                 name="product"
                 placeholder="Product"
             />
-            <button onClick={onAddProductClick}>Add Product</button>
+            <button onClick={handleSaveNewProduct}>Add Product</button>
         </div>
     );
 };

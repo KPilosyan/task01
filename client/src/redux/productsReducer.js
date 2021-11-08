@@ -1,6 +1,4 @@
-import { ADD_PRODUCT, GET_PRODUCTS } from "./actions"
-import axios from 'axios';
-
+import { ADD_PRODUCT, SET_PRODUCTS } from "./actions";
 
 const initialState = {
     products: []
@@ -13,12 +11,16 @@ export const productsReducer = (state = initialState, action) => {
             return { ...state, products: [...state.products, action.payload] }
         }
 
-        case GET_PRODUCTS: {
-            const products = axios.get('http://localhost:5000/products'); // to be taken to middleware  (issue: returns promise)
-            return { ...state, products: [...state.products, products] }
+
+        case SET_PRODUCTS: {
+            return { ...state, products: action.payload }
+
         }
 
         default:
             return state
     }
 }
+
+
+

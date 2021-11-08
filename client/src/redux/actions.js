@@ -1,14 +1,13 @@
 
-
 export const ADD_PRODUCT = "ADD_PRODUCT";
-export const GET_PRODUCTS = "GET_PRODUCTS";
+export const SET_PRODUCTS = "SET_PRODUCTS";
 
 
 export const addProductAction = (product) => ({
     type: ADD_PRODUCT,
     payload: product,
 });
-
-export const getProductsAction = () => ({
-    type: GET_PRODUCTS,
+export const setProductsAction = (products) => ({
+    type: SET_PRODUCTS,
+    payload: products,
 })

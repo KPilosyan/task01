@@ -3,6 +3,7 @@ import { useTable } from 'react-table';
 import './table.css';
 import '../App'
 
+
 const COLUMNS = [
   {
     Header: 'id',
@@ -20,9 +21,9 @@ const COLUMNS = [
 
 const RowDetails = (rowId) => {
   return (
-    <tr id={rowId}>
+    <td key={rowId}>
       Some Details
-    </tr>
+    </td>
   )
 }
 
@@ -31,8 +32,14 @@ const BasicTable = (props) => {
   const [showDetails, setShowDetails] = useState(false)
   const columns = useMemo(() => COLUMNS, []);
 
-  const handleShowDetails = () => {
-    showDetails ? setShowDetails(false) : setShowDetails(!showDetails)
+  const handleShowDetails = (rowId) => {
+    if (showDetails) {
+      setShowDetails(false)
+      RowDetails(rowId)
+    }
+    else {
+      setShowDetails(!showDetails)
+    }
   }
 
   const tableInstance = useTable({
@@ -44,32 +51,13 @@ const BasicTable = (props) => {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
   } = tableInstance;
 
-  console.log(products)
 
   return (
-
-    // <table>
-    //   <tr>
-    //     <th>Company</th>
-    //     <th>Contact</th>
-    //     <th>Country</th>
-    //   </tr>
-    //   <tr>
-    //     <td>Alfreds Futterkiste</td>
-    //     <td>Maria Anders</td>
-    //     <td>Germany</td>
-    //   </tr>
-    //   <tr>
-    //     <td>Centro comercial Moctezuma</td>
-    //     <td>Francisco Chang</td>
-    //     <td>Mexico</td>
-    //   </tr>
-    // </table>
 
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()}>
                 {' '}
@@ -86,7 +74,7 @@ const BasicTable = (props) => {
           prepareRow(row);
           return (
             <>
-              <tr {...row.getRowProps()} onClick={handleShowDetails}>
+              <tr key={row.id} {...row.getRowProps()} onClick={handleShowDetails}>
                 {row.cells.map((cell) => <td {...cell.getCellProps()} >{cell.render('Cell')}  </td>)}
               </tr>
               {showDetails ? <RowDetails /> : null}
