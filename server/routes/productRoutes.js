@@ -11,7 +11,7 @@ router.use(express.urlencoded({ extended: true }));
 
 router.get('/', productController.getProducts);
 router.get('/:id', auth(), productController.getSpecificProduct);
-router.post('/', auth(), productController.postProduct);
+router.post('/', productController.postProduct);
 router.put('/:id', auth(), productController.putProduct);
 router.delete('/:id', auth(), productController.deleteProduct);
 

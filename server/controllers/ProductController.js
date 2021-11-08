@@ -1,5 +1,6 @@
-const ProductService = require('../service/ProductService');
+/* eslint-disable */
 
+const ProductService = require('../service/ProductService');
 const InternalError = require('../errors/Internal');
 
 class ProductController {
@@ -17,13 +18,14 @@ class ProductController {
       const product = await ProductService.getSpecificProduct(req.params.id);
       return res.json(product);
     } catch (err) {
+      console.log(err)
       return next(err);
     }
   }
 
   async postProduct(req, res, next) {
     try {
-      const postedProduct = await ProductService.postProduct(req.name, req.color);
+      const postedProduct = await ProductService.postProduct(req.body.name, req.body.color);
       return res.json(postedProduct);
     } catch (err) {
       const internalErrObj = new InternalError('Internal Error: Unable to create the product');
@@ -33,7 +35,7 @@ class ProductController {
 
   async putProduct(req, res, next) {
     try {
-      const putProduct = await ProductService.putProduct(req.params.id, req.name, req.color);
+      const putProduct = await ProductService.putProduct(req.params.id, req.body.name, req.body.color);
       return res.json(putProduct);
     } catch (err) {
       const internalErrObj = new InternalError('Internal Error: Unable to edit the product');
