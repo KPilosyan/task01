@@ -4,25 +4,39 @@ import { useDispatch } from "react-redux";
 
 
 export const InputNewProduct = () => {
-    const [product, setProduct] = React.useState("");
+    const [product, setProduct] = React.useState({ "name": "", "color": "" });
     const dispatch = useDispatch();
 
     const updateProduct = (event) => {
-        setProduct(event.target.value);
+        const value = event.target.value;
+        setProduct({
+            ...product,
+            [event.target.name]: value,
+        });
+
     };
 
     const handleSaveNewProduct = () => {
+        console.log(product)
         dispatch(saveNewProduct(product))
     }
 
     return (
         <div>
+            <hr />
             <input
                 onChange={updateProduct}
-                value={product}
+                value={product.name}
                 type="text"
-                name="product"
-                placeholder="Product"
+                name="name"
+                placeholder="Product Name"
+            />
+            <input
+                onChange={updateProduct}
+                value={product.color}
+                type="text"
+                name="color"
+                placeholder="Product Color"
             />
             <button onClick={handleSaveNewProduct}>Add Product</button>
         </div>

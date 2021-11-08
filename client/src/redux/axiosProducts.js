@@ -17,7 +17,7 @@ export const fetchProducts = () => {
 export const saveNewProduct = (product) => {
     return function (dispatch) {
 
-        axios.post('http://localhost:5000/products', { product }).then(res => {
+        axios.post('http://localhost:5000/products', { "name": product.name, "color": product.color }).then(res => {
             dispatch(addProductAction(res.data))
 
         }
