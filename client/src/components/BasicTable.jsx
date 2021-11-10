@@ -3,11 +3,11 @@ import './table.css';
 import '../App'
 
 
-const RowDetails = () => {
+const RowDetails = (rowId) => {
   return (
-    <p>
-      Some Details
-    </p>
+    <td colSpan="3">
+      Some Details of row {rowId}
+    </td>
   )
 }
 
@@ -26,7 +26,7 @@ export const TableRow = (props) => {
         <td>{props.product.color}</td>
       </tr>
       <tr>
-        {showDetails ? RowDetails() : null}
+        {showDetails ? RowDetails(props.product.id) : null}
       </tr>
     </>
 
